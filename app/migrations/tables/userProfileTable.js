@@ -1,5 +1,5 @@
 const userProfileTable = `
-	CREATE TABLE IF NOT EXISTS userProfile(
+	CREATE TABLE IF NOT EXISTS user_profile(
 		_id INT(11) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 		idUser INT(11) UNSIGNED,
 		fullname VARCHAR(150) DEFAULT NULL,
@@ -17,8 +17,8 @@ const userProfileTable = `
 `;
 
 const userProfileRelation = `
-	ALTER TABLE userProfile DROP FOREIGN KEY IF EXISTS usersProfile_idUser_foreign;
-	ALTER TABLE userProfile ADD CONSTRAINT usersProfile_idUser_foreign FOREIGN KEY (idUser) REFERENCES users(_id) ON DELETE CASADE
+	ALTER TABLE user_profile DROP FOREIGN KEY IF EXISTS usersProfile_idUser_foreign;
+	ALTER TABLE user_profile ADD CONSTRAINT usersProfile_idUser_foreign FOREIGN KEY (idUser) REFERENCES users(_id) ON DELETE CASADE
 `;
 
 exports.Tables = [userProfileTable];

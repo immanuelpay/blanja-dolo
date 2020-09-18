@@ -1,7 +1,7 @@
-const { dbConnection } = require("../config/db");
-const { tables, relation } = require("./listMigration")
 require('dotenv').config();
-const dataBase = process.env.DB_DATABASE;
+const { dbConnection } = require("../config/db"),
+	{ tables, relation } = require("./listMigration"),
+	dataBase = process.env.DB_DATABASE;
 
 dbConnection.query(`
 	CREATE DATABASE IF NOT EXISTS ${dataBase}; USE ${dataBase}; ${tables.join(";")};`,
