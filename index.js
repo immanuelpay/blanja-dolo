@@ -2,7 +2,11 @@ const express = require("express"),
 	app = express(),
 	morgan = require("morgan"),
 	bodyParser = require("body-parser"),
-	path = require("path");
+	path = require("path"),
+	cors = require("cors");
+
+// Environment variable
+require('dotenv').config();
 
 // Logger
 app.use(morgan("tiny"));
@@ -30,8 +34,7 @@ app.use((error, request, response) => {
 	});
 });
 
-const PORT = 5000;
-
+const PORT = process.env.APP_PORT;
 app.listen(PORT, () => {
 	console.log(`Server Running on Port ${PORT}`);
 });
