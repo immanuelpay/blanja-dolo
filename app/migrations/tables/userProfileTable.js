@@ -18,7 +18,7 @@ const userProfileTable = `
 
 const userProfileRelation = `
 	ALTER TABLE user_profile DROP FOREIGN KEY IF EXISTS usersProfile_idUser_foreign;
-	ALTER TABLE user_profile ADD CONSTRAINT usersProfile_idUser_foreign FOREIGN KEY (idUser) REFERENCES users(_id) ON DELETE CASADE
+	ALTER TABLE user_profile ADD CONSTRAINT usersProfile_idUser_foreign FOREIGN KEY (idUser) REFERENCES users(_id) ON DELETE CASCADE
 `;
 
 exports.Tables = [userProfileTable];
