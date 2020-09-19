@@ -1,37 +1,40 @@
+const slug = require("slug");
 const {
-	GetAllCategory,
-	CreateCategory,
-	GetDetailCategory,
-	UpdateCategory,
-	DeleteCategory,
-	TrashCategory,
-	DeletePermanentCategory
+    CreateCategory
 } = require("../models/categoryModel");
 
-exports.GetAllCategory = async (req, res) => {
+exports.CreateCategory = async (req, res, next) => {
+    try {
+        if (!req.body.name) {
+        	throw new Error("Please add a data.");
+        }
 
-};
+        let params = {
+            name: req.body.name,
+            slug: slug(name),
+            status: req.body.status,
+            idParent: req.body.idParent,
+        };
 
-exports.CreateCategory = async (req, res) => {
-
-};
-
-exports.GetDetailCategory = async (req, res) => {
-
-};
-
-exports.UpdateCategory = async (req, res) => {
-
-};
-
-exports.DeleteCategory = async (req, res) => {
-
-};
-
-exports.TrashCategory = async (req, res) => {
-
-};
-
-exports.DeletePermanentCategory = async (req, res) => {
-
+        const resultQuery = await CreateCategory(params);
+        if (resultQuery) {
+            res.status(200).send({
+                data: {
+                    id: resultQuery[1].insertId,
+                    name: params.name,
+                    slug: params.slug,
+                    status: (params.status == 0) ? "INACTIVE" : "ACTIVE",
+                },
+            });
+        } else {
+            throw new Error("Create Failed.");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(202).send({
+            error: {
+                msg: error.message || "Something Wrong.",
+            },
+        });
+    }
 };

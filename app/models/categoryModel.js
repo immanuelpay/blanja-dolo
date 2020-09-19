@@ -1,30 +1,35 @@
-const { indexOf } = require("mysql2/lib/constants/charset_encodings"),
-	{ runQuery } = require("../config/db");
+const { runQuery } = require("../config/db");
 
-exports.GetAllCategory = (params) => {
-
+exports.GetParentCategory = (params) => {
+	return new Promise((resolve, reject) => {
+		if (!params) {
+			runQuery(`SELECT * FROM categories WHERE idParent=NULL`, (err, result) => {
+				if (err) {
+					return reject(new Error(err));
+				} else {
+					return resolve(result[1][0]);
+				}
+			});
+		} else {
+			runQuery(`SELECT * FROM categories WHERE _id=${params}`, (err, result) => {
+				if (err) {
+					return reject(new Error(err));
+				} else {
+					return resolve(result[1][0]);
+				}
+			});
+		}
+	});
 };
 
 exports.CreateCategory = (body) => {
-
-};
-
-exports.GetDetailCategory = (id) => {
-
-};
-
-exports.UpdateCategory = (id, body) => {
-
-};
-
-exports.DeleteCategory = (id) => {
-
-};
-
-exports.TrashCategory = (params) => {
-
-};
-
-exports.DeletePermanentCategory = (id) => {
-
+	return new Promise((resolve, reject) => {
+		runQuery(`INSERT INTO categories(${Object.keys(body).map().join(",")}) values('${Object.values(body).map().join(",")}')`, (err, result) => {
+			if (err) {
+				return reject(new Error(err));
+			} else {
+				return resolve(result);
+			}
+		});
+	});
 };

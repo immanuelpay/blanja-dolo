@@ -1,9 +1,7 @@
 const express = require("express"),
-	app = express(),
-	morgan = require("morgan"),
-	bodyParser = require("body-parser"),
-	path = require("path"),
-	cors = require("cors");
+    app = express(),
+    morgan = require("morgan"),
+    bodyParser = require("body-parser");
 
 // Environment variable
 require('dotenv').config();
@@ -12,7 +10,7 @@ require('dotenv').config();
 app.use(morgan("tiny"));
 
 //
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Router
@@ -22,21 +20,21 @@ const categoryRouter = require("./app/routes/categoryRouter");
 app.use("/category", categoryRouter);
 
 app.use((request, response, next) => {
-	const error = new Error("Not Found");
-	error.status = 404;
-	next(error);
+    const error = new Error("Not Found");
+    error.status = 404;
+    next(error);
 });
 
 app.use((error, request, response) => {
-	response.status(error.status || 500).json({
-		error: {
-			status: error.status || 500,
-			message: error.message || "Internal Server Error",
-		},
-	});
+    response.status(error.status || 500).json({
+        error: {
+            status: error.status || 500,
+            message: error.message || "Internal Server Error",
+        },
+    });
 });
 
 const PORT = process.env.APP_PORT;
 app.listen(PORT, () => {
-	console.log(`Server Running on Port ${PORT}`);
+    console.log(`Server Running on Port ${PORT}`);
 });
