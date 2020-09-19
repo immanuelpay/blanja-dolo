@@ -16,8 +16,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // Router
+const categoryRouter = require("./app/routes/categoryRouter");
 
 // Routing
+app.use("/category", categoryRouter);
 
 app.use((request, response, next) => {
 	const error = new Error("Not Found");
